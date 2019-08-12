@@ -1,0 +1,6 @@
+﻿  a3main.cpp
+d:\myprojects\threadedbst\assignment3\threadedtree.h(269): warning C4715: 'ThreadedTree<Record>::find': not all control paths return a value
+d:\myprojects\threadedbst\assignment3\threadedtree.h(251): warning C4715: 'ThreadedTree<int>::insert': not all control paths return a value
+d:\myprojects\threadedbst\assignment3\threadedtree.h(269): warning C4715: 'ThreadedTree<int>::find': not all control paths return a value
+d:\myprojects\threadedbst\assignment3\threadedtree.h(251): warning C4715: 'ThreadedTree<Record>::insert': not all control paths return a value
+  Assignment3.vcxproj -> D:\MyProjects\ThreadedBST\Debug\Assignment3.exe
