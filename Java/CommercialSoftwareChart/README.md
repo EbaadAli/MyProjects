@@ -1,4 +1,4 @@
-##Commercial Software Chart
+# Commercial Software Chart
 
 This java application takes in data that we gathered and displays the values on visually appealing graphs to help analyze the data in an easier manner
 
