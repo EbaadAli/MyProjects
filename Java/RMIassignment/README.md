@@ -1,4 +1,4 @@
-##RMIassignment
+# RMIassignment
 
 This application demonstrates my capabilites to develop a client-server connection using TCP protocols from scratch. 
 This application can't actually be ran anymore because the server it connected to is no longer live.
