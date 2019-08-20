@@ -8,5 +8,7 @@ when the user enters "quit" the JOptionPane window closes and the application ou
 * Number of sentences
 
 this code runs on Java SE 7
-to compile: " javac -target 7 -source 7 *.java " 
-to run: "java main" 
+
+**to compile** : *javac -target 7 -source 7  \*.java *
+
+**to run**: *java main*
