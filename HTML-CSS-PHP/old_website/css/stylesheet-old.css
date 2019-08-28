@@ -1,0 +1,143 @@
+#wrapper{
+	margin:10px;
+}
+
+
+#selfie{
+	border-radius: 10%;
+	height:300px;
+	text-align: center;
+}
+#info {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:350px;
+	text-align: center;
+}
+#overflow{
+	padding: 10px 10px;
+	background-color: #757575;
+}
+.question{
+	font-weight: bold;
+	font-size: 18pt;
+	font-family: Bookman Old Style;
+
+}
+.answer{
+	font-size: 14pt;
+	font-family: Book Antiqua;
+	text-align: justify;
+	margin-right: 20%;
+	margin-left: 20%;
+	
+}
+nav ul {
+      background: #efefef; 
+      list-style: none;
+      position: relative; 
+      display: inline-block;  
+      text-transform:uppercase; 
+	  width: 100%;
+	  
+  }
+
+  
+
+  nav ul li {
+     float: left;
+	 margin: none;
+	  
+  }
+  nav ul li:hover {
+      background: #4b545f;
+  }
+  nav ul li:hover a {
+      color: pink;
+	  font-size: 16pt;
+  }
+  nav ul li ul li{
+	  background: #4b545f;
+	  width: 40 px;
+  }
+  
+  
+  
+nav ul ul {
+    display: none;
+}
+
+nav ul li:hover > ul {
+    display: block;
+	width: 140px;
+	
+}
+
+nav ul:hover >li{
+ border: 100px;
+
+}
+nav ul li a{
+    display: block; 
+    padding: 25px 120px;
+    color: #757575; 
+    text-decoration: none;
+}
+nav ul ul { 
+    padding: 0;
+    position: absolute; /*takes our element out of the flow*/
+    top: 100%; /*positions it just below the parent item*/
+    text-transform:none; /* stops text capitalization*/
+}
+
+nav ul ul li {
+    float: none; /*stops the float:left*/
+    border-top: 1px solid #6b727c;
+    border-bottom: 1px solid #575f6a;
+    position: relative;
+}
+
+nav ul ul li a {
+    padding: 15px 40px;
+    color: #fff;
+	
+}   
+
+nav ul ul li a:hover {
+    background: blue;
+}
+
+
+nav ul ul li:nth-child(odd) {
+    background: red;
+}
+
+nav ul ul ul { 
+    padding: 0;
+    position: absolute; /*takes our element out of the flow*/
+    top: 100%; /*positions it just below the parent item*/
+    text-transform:none; /* stops text capitalization*/
+}
+
+nav ul li ul li {
+    float: none; /*stops the float:left*/
+    border-top: 1px solid #6b727c;
+    border-bottom: 1px solid #575f6a;
+    position: relative;
+}
+
+nav ul ul ul li a {
+    padding: 15px 40px;
+    color: #fff;
+	
+}   
+
+nav ul ul ul li a:hover {
+    background: blue;
+}
+
+
+nav ul ul ul li:nth-child(odd) {
+    background: red;
+}
+
