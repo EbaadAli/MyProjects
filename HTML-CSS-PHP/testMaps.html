@@ -1,0 +1,230 @@
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
+<title>ArcGIS Playground</title>
+<style>
+ #viewDiv {
+    padding: 0px 20px 0px;
+    margin: 0;
+	float: left;
+    height: 50%;
+    width: 50%;
+  } 
+  #viewDiv2 {
+    padding: 0;
+    margin: 0;
+	float: right;
+    height: 50%;
+    width: 50%;
+
+  }
+  
+  #swapButton{
+    
+  }
+
+  
+  #bottom-left{
+   display: block;
+   float: left;
+  }
+</style>
+  <link rel="stylesheet" href="https://js.arcgis.com/4.12/esri/css/main.css">
+<script src="https://js.arcgis.com/4.12/"></script>
+<script src="//ajax.googleapis.com/ajax/libs/dojo/1.10.4/dojo/dojo.js"
+        data-dojo-config="isDebug: true, async: true">
+</script>
+<script>
+
+			require([
+			"dojo/_base/fx", 
+			"dojo/fx", 
+			"dojo/fx/easing",
+			"dojo/dom-style", 
+			"dojo/dom", 
+			"dojo/aspect", 
+			"dojo/on", 
+			"dojo/domReady!"
+			], function(baseFx, fx, easing, domStyle, dom, aspect, on) {
+
+				// define a function to return the animation which
+				// swaps the positions of 2 nodes
+				function swapAnim(node1, node2) {
+					var posn1 = parseInt(domStyle.get(node1, "left")),
+						posn2 = parseInt(domStyle.get(node2, "left"));
+
+					return moveNodes = fx.combine([
+						fx.slideTo({
+							duration: 1200,
+							node: node2,
+							left: posn1
+						}),
+						fx.slideTo({
+							duration: 1200,
+							node: node1,
+							left: posn2
+						})
+					]);
+				}
+
+				var ogOrder = true; // track which order our content nodes are in
+
+				var swapButton = dom.byId("swapButton"),
+					c1 = ogOrder ? dom.byId("viewDiv") : dom.byId("viewDiv2"),
+					c2 = ogOrder ? dom.byId("viewDiv2") : dom.byId("viewDiv"),
+					container = dom.byId("container");
+
+				// Set up a click handlers to run our animations
+				on(swapButton, "click", function(evt){
+
+					// chain the swap nodes animation
+					// with another to fade out a background color in our container
+					var anim = fx.chain([
+						swapAnim(c1, c2),
+						baseFx.animateProperty({
+							node: container,
+							properties: {
+								backgroundColor: "#fff"
+							}
+						})
+					]);
+					// before the animation begins, set initial container background
+					aspect.before(anim, "beforeBegin", function(){
+						domStyle.set(container, "backgroundColor", "#eee");
+					});
+
+					// when the animation ends, toggle the originalOrder
+					on(anim, "End", function(n1, n2){
+						ogOrder = !ogOrder;
+					});
+
+					anim.play();
+				});
+			});
+	</script>
+
+  
+<script>
+require([
+  "esri/Map",
+  "esri/views/MapView",
+  "esri/widgets/Search",
+  //"esri/widgets/Directions",
+  "esri/views/SceneView",
+  
+
+], function(Map, MapView, Search, SceneView, Directions) {
+  
+  var map = new Map({
+    basemap: "streets-navigation-vector"
+  });
+  
+  var view = new MapView({
+    container: "viewDiv",  
+    map: map,
+    center: [-79.35857, 43.65687],
+    zoom: 20
+  });
+  
+  var view2 = new SceneView({
+	container: "viewDiv2",  
+    map: map,
+    camera: {
+        position: {  // observation point
+          x: -79.04022, 
+          y: 43.89005,
+          z: 1000 // altitude in meters
+        },
+        tilt: 10  // perspective in degrees
+      }
+	  });
+  
+  // Add Search widget
+  var search = new Search({
+    view: view
+  });
+  view.ui.add(search, "top-right");
+  
+   var search2 = new Search({
+    view: view2
+  });
+  view2.ui.add(search2, "top-right");
+  // Add to the map
+
+  // Find address
+  
+  view2.on("click", function(evt){
+    search.clear(); 
+    view2.popup.clear();
+    if (search.activeSource) {
+      var geocoder = search.activeSource.locator; // World geocode service
+      var params = {
+        location: evt.mapPoint 
+      };
+      geocoder.locationToAddress(params)
+        .then(function(response) { // Show the address found
+          var address = response.address;
+          showPopup(address, evt.mapPoint);
+        }, function(err) { // Show no address found
+          showPopup("No address found.", evt.mapPoint);
+        });
+    }
+  });
+  view.on("click", function(evt){
+    search.clear(); 
+    view.popup.clear();
+    if (search.activeSource) {
+      var geocoder = search.activeSource.locator; // World geocode service
+      var params = {
+        location: evt.mapPoint 
+      };
+      geocoder.locationToAddress(params)
+        .then(function(response) { // Show the address found
+          var address = response.address;
+          showPopup(address, evt.mapPoint);
+        }, function(err) { // Show no address found
+          showPopup("No address found.", evt.mapPoint);
+        });
+    }
+  });
+  
+  
+  function showPopup(address, pt){
+    view2.popup.open({
+      title:  + Math.round(pt.longitude * 100000)/100000 + ", " + Math.round(pt.latitude * 100000)/100000,
+      content: address,
+      location: pt
+    });
+	view.popup.open({
+      title:  + Math.round(pt.longitude * 100000)/100000 + ", " + Math.round(pt.latitude * 100000)/100000,
+      content: address,
+      location: pt
+    });
+  }
+  
+ /* var directions = new Directions({
+	view: view
+	});
+	view.ui.add(directions,"top-right"); */
+  
+});
+
+// 2nd map
+
+
+</script>
+</head>
+<body>
+<div id="container" style="height: 100%; width: 100%">
+  <div id="viewDiv"></div>
+  <div id="viewDiv2"></div>
+<button id="swapButton"> Swap </button>
+
+<div id="bottom-left">
+This is where the directions would be if I had arcGIS Premium.
+</div>
+</div>
+
+</body>
+</html> 
